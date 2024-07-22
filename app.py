@@ -36,11 +36,12 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
-            flash('Login successful!', 'success')
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
+            return redirect(url_for('login'))
     return render_template('login.html')
+
 
 @app.route('/logout')
 @login_required
