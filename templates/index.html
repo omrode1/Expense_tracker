@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Expense Tracker</h1>
+        
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Add Expense</h5>
+                <form id="expense-form">
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" class="form-control" id="amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Expense</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Expenses by Category</h5>
+                <form id="category-form">
+                    <div class="form-group">
+                        <label for="category-query">Category</label>
+                        <select class="form-control" id="category-query" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Expenses</button>
+                </form>
+                <ul id="expenses-list" class="list-group mt-3"></ul>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Expense Summary</h5>
+                <button id="summary-button" class="btn btn-primary">Get Summary</button>
+                <ul id="summary-list" class="list-group mt-3"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="expense-chart"></canvas>
+
+</body>
+</html>
