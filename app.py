@@ -8,6 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'  # Redirect to login page if not authenticated
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +26,8 @@ class Expense(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -33,6 +36,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
+            flash('Login successful!', 'success')
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
@@ -42,6 +46,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -59,6 +64,7 @@ def register():
 @app.route('/')
 @login_required
 def index():
+    print(f'Current user: {current_user.username}')
     return render_template('index.html')
 
 @app.route('/add_expense', methods=['POST'])
@@ -113,9 +119,8 @@ def delete_expense(id):
     db.session.commit()
     return jsonify({'message': 'Expense deleted successfully'})
 
-
-
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        db.create_all()  # This creates the tables if they don't exist
     app.run(debug=True)
+

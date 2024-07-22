@@ -1,3 +1,9 @@
+/* static/css/styles.css */
+
 body {
     padding-top: 20px;
+}
+
+h1, h5 {
+    text-align: center;
 }
